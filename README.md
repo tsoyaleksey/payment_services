@@ -5,8 +5,8 @@ Epam java lab project
 This program is a payment system. Where you can pay for providers and check your payment history.
 
 ## Roles:
-* admin
-* user
+* admin (login: +7 (000) 000-00-00 | password: Admin000 | date of birth: 1994-08-30)
+* user  (login: +7 (777) 777-77-77 | password: 147852aA | date of birth: 1995-09-28)
 
 ## User can:
 * sign-up;
