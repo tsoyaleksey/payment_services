@@ -21,7 +21,7 @@ This program is a payment system. Where you can pay for providers and check your
 ## Admin can:
 * sign-in;
 * sign-out;
-* recover hist password, like a user;
+* recover his password, like a user;
 * to top up his balance;
 * select region;
 * pay for provider, like a user;
