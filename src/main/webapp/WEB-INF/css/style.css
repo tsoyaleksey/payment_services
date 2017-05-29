@@ -1,0 +1,135 @@
+.navbar-header {
+    height: 50px;
+}
+
+body {
+    font-size: 16px;
+    background-color: inherit;
+
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+
+a:hover, a:focus {
+    color: #52addb;
+    text-decoration: none;
+}
+a#logo > img {
+    border: 1px solid #dbdbdb;
+}
+
+img#logoimg {
+    border: 1px solid #dbdbdb;
+}
+
+a:hover#logo, a:focus#logo {
+    margin-right: 14px;
+    display: block;
+    float: left;
+    box-shadow: 3px 3px 1px #9d9d9d;
+    -webkit-box-shadow: 3px 3px 1px #9d9d9d;
+    -moz-box-shadow: 3px 3px 1px #9d9d9d;
+}
+
+.navbar-nav > .active > a {
+    background-color: #9d9d9d;
+}
+
+.navbar-brand {
+    margin-right: 50px;
+}
+
+.centered {
+    text-align: center;
+}
+
+/**************************
+  DEFAULT BOOTSTRAP STYLES
+**************************/
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    padding: 10px 10px;
+    align-content: center;
+}
+
+/***********************
+  CUSTON BTN VALUES
+************************/
+
+.btn {
+    padding: 14px 14px;
+    border: 0 none;
+    font-weight: 700;
+    letter-spacing: 1px;
+    /*text-transform: uppercase;*/
+}
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+
+/*Custom categories menu*/
+.yamm .nav,
+.yamm .collapse,
+.yamm .dropup,
+.yamm .dropdown {
+    position: static;
+}
+.yamm .container {
+    position: relative;
+}
+.yamm .dropdown-menu {
+    left: auto;
+}
+.yamm .yamm-content {
+    padding: 20px 30px;
+}
+.yamm .dropdown.yamm-fw .dropdown-menu {
+    left: 0;
+    right: 0;
+}
+
+.grid-demo {
+    padding: 10px 30px;
+}
+
+.grid-demo [class*="col-"] {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1em;
+    text-align: center;
+    line-height: 2;
+    background-color: #fff;
+}
