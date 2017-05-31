@@ -1,5 +1,6 @@
 # payment services
 Epam java lab project
+Servlet/JSP/JSTL/JS/Bootstrap/Maven/Tomcat 8/Log4j/MySQL
 
 ## Description:
 This program is a payment system. Where you can pay for providers and check your payment history.
