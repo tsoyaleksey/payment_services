@@ -55,9 +55,7 @@ public final class ActionConstants {
     public static final String EDIT_PROVIDER_PAGE               = "edit-provider";
     public static final String EDIT_PROVIDERS_PAGE              = "edit-providers";
     public static final String PROVIDERS_REGIONS                = "providers_regions";
-    public static final String PROVIDER_ERROR                   = "provider_error";
     public static final String PROVIDER_EDIT_ERROR              = "provider_edit_error";
-    public static final String PROVIDER_ALREADY_EXIST           = "provider_already_exist";
     public static final String PROVIDER_NAME                    = "provider_name";
     public static final String PROVIDER_ID                      = "provider_id";
     public static final String PROVIDERS_LOGOTYPE               = "logotype";
@@ -75,4 +73,6 @@ public final class ActionConstants {
     public static final String CATEGORY_ID                      = "category_id";
     public static final String CATEGORY_ERROR                   = "category_error";
     public static final String TRUE                             = "true";
+    public static final boolean isRedirect                      = true;
+    public static final int ZERO                                = 0;
 }

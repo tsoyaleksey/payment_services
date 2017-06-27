@@ -47,7 +47,7 @@ public class PasswordRecoveryAction implements Action {
                         session.setAttribute(ActionConstants.USER_NUMBER, number);
                         session.setAttribute(ActionConstants.USER_BALANCE, user.getWallet().getBalance());
                         log.info("User with id: " + user.getId() + ", number: " + number + ", role: " + user.getRole().getName() + " logged in");
-                        return new ActionResult(ActionConstants.MAIN_PAGE, true);
+                        return new ActionResult(ActionConstants.MAIN_PAGE, ActionConstants.isRedirect);
                     }
                 }
             }

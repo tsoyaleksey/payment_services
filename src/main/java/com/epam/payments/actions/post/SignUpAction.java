@@ -55,7 +55,7 @@ public class SignUpAction implements Action {
                 if (password.equals(confirmPassword)) {
                     checkParametersByRegex(password, ActionConstants.PASSWORD, properties.getProperty(ActionConstants.PASSWORD_REGEX), req);
                 } else {
-                    req.setAttribute(ActionConstants.PASSWORD_ERROR, true);
+                    req.setAttribute(ActionConstants.PASSWORD_ERROR, ActionConstants.TRUE);
                 }
             } else {
                 req.setAttribute(ActionConstants.NUMBER_ERROR, ActionConstants.NUMBER_ERROR_MSG);
@@ -77,7 +77,7 @@ public class SignUpAction implements Action {
                 log.error("Cannot register ", e);
             }
         }
-        return new ActionResult(ActionConstants.SIGN_IN_PAGE, true);
+        return new ActionResult(ActionConstants.SIGN_IN_PAGE, ActionConstants.isRedirect);
     }
 
     private void checkParametersByRegex(String parameter, String paramName, String regex, HttpServletRequest req) {

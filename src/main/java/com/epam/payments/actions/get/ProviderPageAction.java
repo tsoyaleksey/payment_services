@@ -26,7 +26,7 @@ public class ProviderPageAction implements Action {
         req.setAttribute(ActionConstants.LIST_OF_PROVIDERS, providerService.findAllProvidersByRegion(regionId));
         req.setAttribute(ActionConstants.LIST_OF_CATEGORIES, service.getListOfCategories());
 
-        if (id != 0) {
+        if (id != ActionConstants.ZERO) {
             Provider provider = providerService.findProviderById(id);
             if (provider == null) {
                 return new ActionResult(ActionConstants.ERROR);

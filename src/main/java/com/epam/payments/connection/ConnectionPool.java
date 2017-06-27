@@ -22,8 +22,7 @@ public class ConnectionPool {
     private static final Logger log = Logger.getLogger(ConnectionPool.class);
 
     private static ConnectionPool connectionPool;
-    private BlockingQueue<Connection> freeConnections = null;
-    private BlockingQueue<Connection> usedConnections = null;
+    private BlockingQueue<Connection> connections = null;
     private String url;
     private String username;
     private String password;
@@ -82,12 +81,11 @@ public class ConnectionPool {
         } catch (ClassNotFoundException e) {
             log.error("Could not find class ", e);
         }
-        freeConnections = new ArrayBlockingQueue<>(connectionsLimit);
-        usedConnections = new ArrayBlockingQueue<>(connectionsLimit);
-        while (freeConnections.size() != connectionsLimit) {
+        connections = new ArrayBlockingQueue<>(connectionsLimit);
+        while (connections.size() != connectionsLimit) {
             try {
                 Connection connection = DriverManager.getConnection(url, username, password);
-                freeConnections.put(connection);
+                connections.put(connection);
             } catch (SQLException | InterruptedException e) {
                 log.error("Cannot get connection or put in the connection queue ", e);
             }
@@ -103,14 +101,13 @@ public class ConnectionPool {
      */
     public Connection getConnection() throws ConnectionPoolException {
         Connection currentConnection = null;
-        log.info("Free connections: " + freeConnections.size() + " Used connections: " + usedConnections.size());
+        log.info("Connections: " + connections.size());
         try {
-            currentConnection = freeConnections.take();
-            usedConnections.put(currentConnection);
+            currentConnection = connections.take();
         } catch (InterruptedException e) {
             log.error("Cannot replace the connection ", e);
         }
-        log.info("Free connections: " + freeConnections.size() + " Used connections: " + usedConnections.size());
+        log.info("Connections: " + connections.size());
         return currentConnection;
     }
 
@@ -122,12 +119,11 @@ public class ConnectionPool {
      */
     public void closeConnection(Connection connection) throws ConnectionPoolException {
         try {
-            usedConnections.remove(connection);
-            freeConnections.put(connection);
+            connections.put(connection);
         } catch (InterruptedException e) {
             log.error("Could not close the connection ", e);
         }
-        log.info("Free connections: " + freeConnections.size() + " Used connections: " + usedConnections.size());
+        log.info("Connections: " + connections.size());
     }
 
     private void closeAllConnectionInQueue(BlockingQueue<Connection> connections) throws ConnectionPoolException {
@@ -146,8 +142,7 @@ public class ConnectionPool {
      * @throws ConnectionPoolException
      */
     public void closeAllConnections() throws ConnectionPoolException {
-        closeAllConnectionInQueue(freeConnections);
-        closeAllConnectionInQueue(usedConnections);
+        closeAllConnectionInQueue(connections);
         log.info("All connections are closed");
     }
 

@@ -8,7 +8,6 @@ import com.epam.payments.models.User;
 import com.epam.payments.services.ManagementService;
 import com.epam.payments.services.ProviderService;
 import com.epam.payments.services.UserService;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

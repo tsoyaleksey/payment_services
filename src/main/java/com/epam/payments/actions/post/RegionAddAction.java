@@ -32,7 +32,7 @@ public class RegionAddAction implements Action {
                         region = new Region();
                         region.setName(name);
                     } else {
-                        req.setAttribute(ActionConstants.REGION_ERROR, true);
+                        req.setAttribute(ActionConstants.REGION_ERROR, ActionConstants.TRUE);
                         return new ActionResult(ActionConstants.EDIT_REGIONS_PAGE);
                     }
                 }
@@ -42,6 +42,6 @@ public class RegionAddAction implements Action {
             }
         }
         log.info("Added new region " + name);
-        return new ActionResult(ActionConstants.EDIT_REGIONS_PAGE, true);
+        return new ActionResult(ActionConstants.EDIT_REGIONS_PAGE, ActionConstants.isRedirect);
     }
 }

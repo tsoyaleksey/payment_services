@@ -28,62 +28,57 @@ import java.util.List;
 public class ProviderEditAction implements Action {
     private static final Logger log = Logger.getLogger(ProviderEditAction.class);
 
+    private ProviderService providerService = new ProviderService();
+
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        ManagementService service       = new ManagementService();
-        ProviderService providerService = new ProviderService();
+        ManagementService service = new ManagementService();
         List<Region> listOfRegions;
 
-        String name      = req.getParameter(ActionConstants.PROVIDER_NAME);
-        String[] regions = req.getParameterValues(ActionConstants.REGION_ID);
-        int providerId   = Integer.parseInt(req.getParameter(ActionConstants.PROVIDER_ID));
-        int categoryId   = Integer.parseInt(req.getParameter(ActionConstants.CATEGORY_ID));
+        String name       = req.getParameter(ActionConstants.PROVIDER_NAME);
+        String[] regions  = req.getParameterValues(ActionConstants.REGION_ID);
+        String providerId = req.getParameter(ActionConstants.PROVIDER_ID);
+        String categoryId = req.getParameter(ActionConstants.CATEGORY_ID);
 
         try {
-            if (providerId != 0) {
+            if (providerId != null && categoryId != null && regions != null) {
                 Part part        = req.getPart(ActionConstants.NEW_LOGOTYPE);
                 InputStream logo = part.getInputStream();
 
                 listOfRegions     = new ArrayList<>();
-                Provider provider = providerService.findProviderById(providerId);
-                Category category = service.findCategoryById(categoryId);
-                provider.setCategory(category);
-                provider.setLogotype(logo);
+                Provider provider = providerService.findProviderById(Integer.parseInt(providerId));
+                Category category = service.findCategoryById(Integer.parseInt(categoryId));
 
-                for (Provider p : providerService.getListOfProviders()) {
-                    if (!p.getName().equals(name)) {
-                        provider.setName(name);
-                    } else if (p.getName().equals(provider.getName())) {
-                        provider.setName(name);
-                    } else {
-                        req.setAttribute(ActionConstants.PROVIDER_ALREADY_EXIST, true);
-                        return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE);
-                    }
+                for (String regionId : regions) {
+                    Region region = service.findRegionById(Integer.parseInt(regionId));
+                    Region foundRegion = providerService.findByProviderAndRegion(provider, region);
+                    if (foundRegion == null || region.equals(foundRegion)) listOfRegions.add(region);
                 }
 
-                if (regions != null) {
-                    for (String regionId : regions) {
-                        Region region = service.findRegionById(Integer.parseInt(regionId));
-                        Region foundRegion = providerService.findByProviderAndRegion(provider, region);
-                        if (foundRegion == null) {
-                            listOfRegions.add(region);
-                        } else if (region.getId() != foundRegion.getId()) {
-                            listOfRegions.add(region);
-                        } else {
-                            req.setAttribute(ActionConstants.PROVIDER_EDIT_ERROR, true);
-                            return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE);
-                        }
-
-                    }
-                }
-                providerService.updateProvider(provider, listOfRegions);
+                providerService.updateProvider(editProvidersData(provider,category,name,logo), listOfRegions);
             } else {
-                req.setAttribute(ActionConstants.PROVIDER_EDIT_ERROR, true);
+                req.setAttribute(ActionConstants.PROVIDER_EDIT_ERROR, ActionConstants.TRUE);
                 return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE);
             }
         } catch (ServletException | IOException | ServiceException e) {
             log.error("Cannot edit provider ", e);
+            req.setAttribute(ActionConstants.PROVIDER_EDIT_ERROR, ActionConstants.TRUE);
+            return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE);
         }
-        return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE, true);
+        return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE, ActionConstants.isRedirect);
+    }
+
+    private Provider editProvidersData(Provider provider, Category category, String name, InputStream logo) throws ServiceException {
+        provider.setCategory(category);
+        provider.setLogotype(logo);
+
+        for (Provider p : providerService.getListOfProviders()) {
+            if (!p.getName().equals(name) || p.getName().equals(provider.getName())) {
+                provider.setName(name);
+            } else {
+                throw new ServiceException("Cannot edit provider");
+            }
+        }
+        return  provider;
     }
 }

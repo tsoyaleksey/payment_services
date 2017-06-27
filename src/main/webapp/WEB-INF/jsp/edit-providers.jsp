@@ -41,17 +41,8 @@
                             <a href="${update_url}" title="${updatePage}"> <span class="glyphicon glyphicon-refresh"></span></a>
                         </td>
                         <td>
-                            <c:if test="${not empty provider_error}">
-                                <span class="alert alert-danger">${errorProviderAddNew}</span>
-                            </c:if>
-                            <c:if test="${not empty provider_already_exist}">
-                                <span class="alert alert-danger">${errorProviderName}</span>
-                            </c:if>
                             <c:if test="${not empty provider_edit_error}">
-                                <span class="alert alert-danger">${errorProviderAddNew}</span>
-                            </c:if>
-                            <c:if test="${not empty provider_error}">
-                                <span class="alert alert-danger" style="padding-top: 5px">${errorProviderName}</span>
+                                <span class="alert alert-danger">${errorProviderAddNew} | ${errorProviderName}</span>
                             </c:if>
                         </td>
                     </tr>

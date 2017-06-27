@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TopUpBalanceAction implements Action {
     private static final Logger log = Logger.getLogger(TopUpBalanceAction.class);
 
-    private static final double MAX = 150000;
+    private static final double MAX_BALANCE = 150000;
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -27,17 +27,17 @@ public class TopUpBalanceAction implements Action {
 
         try {
             User user = service.findUserByNumber(userNumber);
-            if (enteredBalance != 0 && enteredBalance <= MAX && user.getWallet().getBalance() + enteredBalance <= MAX) {
+            if (enteredBalance != 0 && enteredBalance <= MAX_BALANCE && user.getWallet().getBalance() + enteredBalance <= MAX_BALANCE) {
                 service.toTopUpBalance(user, enteredBalance);
                 req.getSession().setAttribute(ActionConstants.USER_BALANCE, user.getWallet().getBalance() + enteredBalance);
             } else {
-                req.setAttribute(ActionConstants.TOP_UP_THE_BALANCE_ERROR, true);
+                req.setAttribute(ActionConstants.TOP_UP_THE_BALANCE_ERROR, ActionConstants.TRUE);
                 return new ActionResult(ActionConstants.MAIN_PAGE);
             }
             log.info("User: " + user.getPhone() + " , to top up his balance on " + enteredBalance);
         } catch (ServiceException e) {
             log.error("Cannot top up user's balance ", e);
         }
-        return new ActionResult(req.getHeader(ActionConstants.REFERER), true);
+        return new ActionResult(req.getHeader(ActionConstants.REFERER), ActionConstants.isRedirect);
     }
 }

@@ -1,5 +1,6 @@
 package com.epam.payments.actions.post;
 
+import static com.epam.payments.actions.api.ActionConstants.*;
 import com.epam.payments.actions.api.Action;
 import com.epam.payments.actions.api.ActionConstants;
 import com.epam.payments.actions.api.ActionResult;
@@ -21,8 +22,6 @@ import java.time.LocalDateTime;
  */
 public class PaymentTransactionAction implements Action {
     private static final Logger log = Logger.getLogger(PaymentTransactionAction.class);
-
-    private static final int ZERO = 0;
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -55,10 +54,10 @@ public class PaymentTransactionAction implements Action {
                     paymentHistory.setSum(sum);
                     req.getSession().setAttribute(ActionConstants.USER_BALANCE, user.getWallet().getBalance() - sum);
                 } else {
-                    req.setAttribute(ActionConstants.BALANCE_ERROR, true);
+                    req.setAttribute(ActionConstants.BALANCE_ERROR, TRUE);
                     return new ActionResult(ActionConstants.PROVIDER_PAGE);
                 }
-                req.setAttribute(ActionConstants.SUCCESS, true);
+                req.setAttribute(ActionConstants.SUCCESS, TRUE);
                 req.setAttribute(ActionConstants.DATE_OF_PAYMENT, paymentHistory.getDateTime());
                 req.setAttribute(ActionConstants.NUMBER, paymentHistory.getNumber());
                 req.setAttribute(ActionConstants.PROVIDER_NAME, provider.getName());

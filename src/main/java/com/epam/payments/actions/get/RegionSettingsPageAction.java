@@ -4,7 +4,6 @@ import com.epam.payments.actions.api.Action;
 import com.epam.payments.actions.api.ActionConstants;
 import com.epam.payments.actions.api.ActionResult;
 import com.epam.payments.services.ManagementService;
-import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

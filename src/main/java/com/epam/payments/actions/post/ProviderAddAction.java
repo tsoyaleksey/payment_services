@@ -30,36 +30,36 @@ public class ProviderAddAction implements Action {
         Provider provider;
 
         String name         = req.getParameter(ActionConstants.PROVIDER_NAME);
-        int categoryId      = Integer.parseInt(req.getParameter(ActionConstants.CATEGORY_ID));
+        String categoryId   = req.getParameter(ActionConstants.CATEGORY_ID);
 
         for (Provider p : providerService.getListOfProviders()) {
             if (p.getName().equals(name)) {
-                req.setAttribute(ActionConstants.PROVIDER_ALREADY_EXIST, true);
+                req.setAttribute(ActionConstants.PROVIDER_EDIT_ERROR, ActionConstants.TRUE);
                 return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE);
             }
         }
 
         try {
-            if (name != null && categoryId != 0) {
+            if (name != null && categoryId != null) {
                 Part part = req.getPart(ActionConstants.PROVIDERS_LOGOTYPE);
                 InputStream logo = part.getInputStream();
 
-                Category category = service.findCategoryById(categoryId);
+                Category category = service.findCategoryById(Integer.parseInt(categoryId));
                 provider = new Provider();
                 provider.setCategory(category);
                 provider.setLogotype(logo);
                 provider.setName(name);
                 providerService.createNewProvider(provider);
             } else {
-                req.setAttribute(ActionConstants.PROVIDER_ERROR, true);
+                req.setAttribute(ActionConstants.PROVIDER_EDIT_ERROR, ActionConstants.TRUE);
                 return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE);
             }
             log.info("Created new provider " + name + " ,category is " + provider.getCategory().getName());
         } catch (IOException | ServletException | ServiceException e) {
-            req.setAttribute(ActionConstants.PROVIDER_ERROR, true);
+            req.setAttribute(ActionConstants.PROVIDER_EDIT_ERROR, ActionConstants.TRUE);
             log.error("Cannot add new provider ", e);
             return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE);
         }
-        return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE, true);
+        return new ActionResult(ActionConstants.EDIT_PROVIDERS_PAGE, ActionConstants.isRedirect);
     }
 }

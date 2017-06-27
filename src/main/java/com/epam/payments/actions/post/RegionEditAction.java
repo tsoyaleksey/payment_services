@@ -21,21 +21,21 @@ public class RegionEditAction implements Action {
         ManagementService service = new ManagementService();
 
         String name = req.getParameter(ActionConstants.REGION_NAME);
-        int id      = Integer.parseInt(req.getParameter(ActionConstants.REGION_ID));
+        String id   = req.getParameter(ActionConstants.REGION_ID);
 
-        if (name != null) {
+        if (name != null && id != null) {
             for (Region r : service.getListOfRegions()) {
                 if (!r.getName().equals(name)) {
-                    Region region = service.findRegionById(id);
+                    Region region = service.findRegionById(Integer.parseInt(id));
                     log.info("Region updated from " + region.getName() + " on " + name);
                     region.setName(name);
                     service.updateRegion(region);
                 } else {
-                    req.setAttribute(ActionConstants.REGION_ERROR, true);
+                    req.setAttribute(ActionConstants.REGION_ERROR, ActionConstants.TRUE);
                     return new ActionResult(ActionConstants.EDIT_REGIONS_PAGE);
                 }
             }
         }
-        return new ActionResult(ActionConstants.EDIT_REGIONS_PAGE, true);
+        return new ActionResult(ActionConstants.EDIT_REGIONS_PAGE, ActionConstants.isRedirect);
     }
 }

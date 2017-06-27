@@ -21,21 +21,21 @@ public class CategoryEditAction implements Action {
         ManagementService service = new ManagementService();
 
         String name = req.getParameter(ActionConstants.CATEGORY_NAME);
-        int id      = Integer.parseInt(req.getParameter(ActionConstants.CATEGORY_ID));
+        String id   = req.getParameter(ActionConstants.CATEGORY_ID);
 
-        if (name != null) {
+        if (name != null && id != null) {
             for (Category c : service.getListOfCategories()) {
                 if (!c.getName().equals(name)) {
-                    Category category = service.findCategoryById(id);
+                    Category category = service.findCategoryById(Integer.parseInt(id));
                     category.setName(name);
                     service.updateCategory(category);
                     log.info("Category updated from " + category.getName() + " on " + name);
                 } else {
-                    req.setAttribute(ActionConstants.CATEGORY_ERROR, true);
+                    req.setAttribute(ActionConstants.CATEGORY_ERROR, ActionConstants.TRUE);
                     return new ActionResult(ActionConstants.EDIT_CATEGORIES_PAGE);
                 }
             }
         }
-        return new ActionResult(ActionConstants.EDIT_CATEGORIES_PAGE, true);
+        return new ActionResult(ActionConstants.EDIT_CATEGORIES_PAGE, ActionConstants.isRedirect);
     }
 }

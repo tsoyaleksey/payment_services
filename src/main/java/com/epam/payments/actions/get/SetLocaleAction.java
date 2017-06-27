@@ -23,6 +23,6 @@ public class SetLocaleAction implements Action {
         Config.set(req.getSession(), Config.FMT_LOCALE, new Locale(lang));
         req.getSession().setAttribute(ActionConstants.LANG, lang);
         log.info("The selected language is " + lang);
-        return new ActionResult(req.getHeader(ActionConstants.REFERER), true);
+        return new ActionResult(req.getHeader(ActionConstants.REFERER), ActionConstants.isRedirect);
     }
 }

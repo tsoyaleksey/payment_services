@@ -38,10 +38,10 @@ public class SignInAction implements Action {
             session.setAttribute(ActionConstants.USER_NUMBER, number);
             session.setAttribute(ActionConstants.USER_BALANCE, user.getWallet().getBalance());
         } else {
-            req.setAttribute(ActionConstants.USER_ERROR, true);
+            req.setAttribute(ActionConstants.USER_ERROR, ActionConstants.TRUE);
             return new ActionResult(ActionConstants.SIGN_IN_PAGE);
         }
         log.info("User with id: " + user.getId() + ", number: " + number + ", role: " + user.getRole().getName() + " logged in");
-        return new ActionResult(ActionConstants.MAIN_PAGE, true);
+        return new ActionResult(ActionConstants.MAIN_PAGE, ActionConstants.isRedirect);
     }
 }

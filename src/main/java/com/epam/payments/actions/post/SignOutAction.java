@@ -17,6 +17,6 @@ public class SignOutAction implements Action {
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
         session.invalidate();
-        return new ActionResult(ActionConstants.SIGN_IN_PAGE, true);
+        return new ActionResult(ActionConstants.SIGN_IN_PAGE, ActionConstants.isRedirect);
     }
 }

@@ -39,6 +39,6 @@ public class RegionSelectAction implements Action {
         req.getSession().setAttribute(ActionConstants.REGION_ID, region.getId());
         req.getSession().setAttribute(ActionConstants.USER_REGION, region.getName());
 
-        return new ActionResult(req.getHeader(ActionConstants.REFERER), true);
+        return new ActionResult(req.getHeader(ActionConstants.REFERER), ActionConstants.isRedirect);
     }
 }

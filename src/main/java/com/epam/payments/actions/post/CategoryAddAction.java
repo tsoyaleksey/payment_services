@@ -23,16 +23,15 @@ public class CategoryAddAction implements Action {
 
         String name = req.getParameter(ActionConstants.CATEGORY_NAME);
 
-        Category category = null;
+        Category category = new Category();
 
         if (name != null) {
             try {
                 for (Category c : service.getListOfCategories()) {
                     if (!c.getName().equals(name)) {
-                        category = new Category();
                         category.setName(name);
                     } else {
-                        req.setAttribute(ActionConstants.CATEGORY_ERROR, true);
+                        req.setAttribute(ActionConstants.CATEGORY_ERROR, ActionConstants.TRUE);
                         return new ActionResult(ActionConstants.EDIT_CATEGORIES_PAGE);
                     }
                 }
@@ -42,6 +41,6 @@ public class CategoryAddAction implements Action {
             }
         }
         log.info("Added new category " + name);
-        return new ActionResult(ActionConstants.EDIT_CATEGORIES_PAGE, true);
+        return new ActionResult(ActionConstants.EDIT_CATEGORIES_PAGE, ActionConstants.isRedirect);
     }
 }
